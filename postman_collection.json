@@ -1,0 +1,67 @@
+{
+  "info": {
+    "name": "Mini ERP CRM Portal",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:4000" },
+    { "key": "token", "value": "" },
+    { "key": "customerId", "value": "" },
+    { "key": "productId", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "Login",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": "{{baseUrl}}/auth/login",
+        "body": { "mode": "raw", "raw": "{\"email\":\"admin@example.com\",\"password\":\"Password@123\"}" }
+      }
+    },
+    {
+      "name": "Dashboard Summary",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "{{baseUrl}}/dashboard/summary"
+      }
+    },
+    {
+      "name": "Create Customer",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "url": "{{baseUrl}}/customers",
+        "body": { "mode": "raw", "raw": "{\"customerName\":\"Demo Buyer\",\"mobileNumber\":\"9000000000\",\"email\":\"buyer@example.com\",\"businessName\":\"Demo Trading\",\"gstNumber\":\"27ABCDE1234F1Z5\",\"customerType\":\"Wholesale\",\"address\":\"Mumbai\",\"status\":\"Lead\",\"followUpDate\":\"2026-08-20\",\"notes\":\"First contact\"}" }
+      }
+    },
+    {
+      "name": "Create Product",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "url": "{{baseUrl}}/products",
+        "body": { "mode": "raw", "raw": "{\"productName\":\"Demo Product\",\"sku\":\"DEMO-001\",\"category\":\"Staples\",\"unitPrice\":250,\"currentStock\":50,\"minimumStockAlertQuantity\":10,\"location\":\"Warehouse A\"}" }
+      }
+    },
+    {
+      "name": "Create Confirmed Challan",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "Authorization", "value": "Bearer {{token}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "url": "{{baseUrl}}/challans",
+        "body": { "mode": "raw", "raw": "{\"customerId\":\"{{customerId}}\",\"status\":\"Confirmed\",\"items\":[{\"productId\":\"{{productId}}\",\"quantity\":2}]}" }
+      }
+    }
+  ]
+}
